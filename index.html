@@ -51,7 +51,6 @@
       }
       .header-nav {
         position: fixed; /* Diubah agar menu selalu mengikuti layar */
-        position: fixed; /* Diubah agar menu selalu mengikuti layar */
         top: 25px;
         right: 25px;
         z-index: 100;
@@ -184,23 +183,6 @@
         font-size: 8px;
         z-index: 100;
       }
-      footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(
-          0,
-          0,
-          0,
-          0.5
-        ); /* Latar belakang hitam transparan */
-        color: white;
-        text-align: center;
-        padding: 10px 0;
-        font-size: 8px;
-        z-index: 100;
-      }
 
       /* 2. Tambahkan Media Query untuk layar kecil (mobile) */
       @media (max-width: 600px) {
@@ -279,7 +261,6 @@
 
     <script>
       // --- Logika untuk Burger Menu ---
-      // --- Logika untuk Burger Menu ---
       const burgerMenu = document.getElementById("burger-menu");
       const navLinks = document.getElementById("nav-links");
 
@@ -336,12 +317,19 @@
             });
         });
     </script>
-    <footer>
-      Aplikasi ini dibuat dengan &hearts; oleh
-      <a href="https://www.linkedin.com/in/muhammad-husein-arafat-27884a21b/"
-        >Husein Arafat</a
-      >
-      &copy; 2025
+    <footer id="main-footer">
+      <span>
+        Aplikasi ini dibuat dengan &hearts; oleh
+        <a href="https://www.linkedin.com/in/muhammad-husein-arafat-27884a21b/"
+          >Husein Arafat</a
+        >
+        &copy; <span id="copyright-year"></span>
+      </span>
     </footer>
+    <script>
+      // Mengatur tahun hak cipta secara dinamis
+      document.getElementById("copyright-year").textContent =
+        new Date().getFullYear();
+    </script>
   </body>
 </html>

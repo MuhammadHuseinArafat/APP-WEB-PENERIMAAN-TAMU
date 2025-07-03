@@ -211,7 +211,11 @@
     </div>
     <div class="form-container">
       <!-- --- BAGIAN LOGO --- -->
-      <img src="img/logo.png" alt="Logo MA C" class="form-logo" />
+      <img
+        src="img/logo.png"
+        alt="Logo Madrasah Aliyah Cakrawala"
+        class="form-logo"
+      />
 
       <h2>Formulir Tamu Sekolah</h2>
       <form id="tamuForm">
@@ -279,49 +283,52 @@
     </script>
     <!-- Menggunakan script sebagai module untuk mengakses Environment Variables -->
     <script type="module">
-      document
-        .getElementById("copyright-year")
-        .append(new Date().getFullYear());
+      // Pastikan seluruh dokumen dimuat sebelum menjalankan skrip
+      document.addEventListener("DOMContentLoaded", function () {
+        // Mengatur tahun hak cipta secara dinamis
+        const copyrightYearEl = document.getElementById("copyright-year");
+        if (copyrightYearEl) {
+          copyrightYearEl.append(new Date().getFullYear());
+        }
 
-      document
-        .getElementById("tamuForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+        const tamuForm = document.getElementById("tamuForm");
+        if (tamuForm) {
+          tamuForm.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-          // Tampilkan status loading dan nonaktifkan tombol
-          const submitButton = document.getElementById("submitButton");
-          const loadingStatus = document.getElementById("loadingStatus");
-          submitButton.disabled = true;
-          loadingStatus.style.display = "block";
+            // Tampilkan status loading dan nonaktifkan tombol
+            const submitButton = document.getElementById("submitButton");
+            const loadingStatus = document.getElementById("loadingStatus");
+            submitButton.disabled = true;
+            loadingStatus.style.display = "block";
 
-          const myForm = e.target;
-          const formData = new FormData(myForm);
+            const myForm = e.target;
+            const formData = new FormData(myForm);
 
-          // Baca SCRIPT_URL dari Vercel Environment Variable
-          const scriptURL = import.meta.env.VITE_SCRIPT_URL;
+            // Baca SCRIPT_URL dari Vercel Environment Variable
+            const scriptURL = import.meta.env.VITE_SCRIPT_URL;
 
-          fetch(scriptURL, { method: "POST", body: formData })
-            .then((response) => response.json()) // 1. Baca respons sebagai JSON
-            .then((data) => {
-              if (data.status === "success") {
-                // 2. Cek status dari server
-                alert("Data berhasil disimpan di Google Sheet!");
-                myForm.reset();
-              } else {
-                // 3. Tampilkan pesan error dari server jika gagal
-                alert("Gagal menyimpan: " + data.message);
-              }
-            })
-            .catch((error) => {
-              alert("Gagal mengirim data. Terjadi kesalahan komunikasi.");
-              console.error("Error:", error.message);
-            })
-            .finally(() => {
-              // Sembunyikan status loading dan aktifkan kembali tombol
-              submitButton.disabled = false;
-              loadingStatus.style.display = "none";
-            });
-        });
+            fetch(scriptURL, { method: "POST", body: formData })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status === "success") {
+                  alert("Data berhasil disimpan di Google Sheet!");
+                  myForm.reset();
+                } else {
+                  alert("Gagal menyimpan: " + data.message);
+                }
+              })
+              .catch((error) => {
+                alert("Gagal mengirim data. Terjadi kesalahan komunikasi.");
+                console.error("Error:", error.message);
+              })
+              .finally(() => {
+                submitButton.disabled = false;
+                loadingStatus.style.display = "none";
+              });
+          });
+        }
+      });
     </script>
     <footer id="main-footer">
       Aplikasi ini dibuat dengan &hearts; oleh

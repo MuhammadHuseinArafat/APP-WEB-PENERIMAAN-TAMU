@@ -1,0 +1,14 @@
+# File Sistem Operasi
+.DS_Store
+Thumbs.db
+
+# Folder Editor Kode / IDE
+.vscode/
+.idea/
+
+# File Log
+*.log
+
+# File Konfigurasi Lokal (SANGAT PENTING)
+# File ini akan berisi URL skrip dan kata sandi Anda.
+config.js

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Formulir Tamu Sekolah</title>
+    <!-- 1. Tambahkan Meta Viewport Tag untuk responsivitas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+
+        /* --- Latar Belakang Gambar --- */
+        /* Menggunakan gambar dari folder lokal 'img' */
+        background-image: url("img/background.jpeg");
+        background-size: cover; /* Membuat gambar menutupi seluruh area */
+        background-position: center; /* Memusatkan gambar */
+        background-attachment: fixed; /* Membuat gambar tetap saat halaman di-scroll */
+      }
+      .form-container {
+        /* Dibuat sedikit transparan agar lebih menyatu dengan background */
+        background-color: rgba(255, 255, 255, 0.95);
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 20px 25px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        max-width: 700px; /* Disesuaikan agar lebih lebar */
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transisi untuk efek timbul */
+      }
+      .form-container:hover {
+        transform: translateY(-8px); /* Efek timbul/maju ke depan */
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2); /* Bayangan lebih kuat */
+      }
+      .form-logo {
+        display: block;
+        margin: 0 auto 20px auto; /* Center horizontally, add space below */
+        max-width: 200px; /* Atur ukuran logo Anda di sini */
+        height: auto; /* Menjaga rasio aspek gambar */
+      }
+      h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 25px;
+      }
+      .header-nav {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+        z-index: 100;
+      }
+      /* Gaya untuk Ikon Burger */
+      .burger-menu {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 5px;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .burger-menu span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: #333;
+        border-radius: 3px;
+        transition: all 0.3s ease-in-out;
+      }
+      /* Animasi Burger menjadi 'X' */
+      .burger-menu.active span:nth-child(1) {
+        transform: translateY(10px) rotate(45deg);
+      }
+      .burger-menu.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .burger-menu.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+      /* Gaya untuk Menu Dropdown */
+      .nav-links {
+        display: none; /* Sembunyi secara default */
+        position: absolute;
+        top: 50px; /* Posisi di bawah ikon burger */
+        right: 0;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .nav-links.active {
+        display: block; /* Tampil saat aktif */
+      }
+      .nav-links a {
+        color: #0c0c0c;
+        padding: 12px 20px;
+        text-decoration: none;
+        display: block;
+        white-space: nowrap;
+      }
+      .nav-links a:hover {
+        background-color: #f1f1f1;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+      }
+      /* Menargetkan semua input teks dan telepon */
+      input[type="text"],
+      input[type="tel"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box; /* Important for padding and width */
+        font-size: 16px;
+      }
+      .form-buttons {
+        display: flex;
+        gap: 10px; /* Jarak antar tombol */
+      }
+      .form-buttons button {
+        width: 100%;
+        padding: 12px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      #submitButton {
+        background-color: #007bff;
+      }
+      #submitButton:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+      .reset-button {
+        background-color: #6c757d; /* Warna abu-abu untuk aksi sekunder */
+      }
+      .reset-button:hover {
+        background-color: #5a6268;
+      }
+      #submitButton:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+      }
+      #loadingStatus {
+        text-align: center;
+        margin-top: 15px;
+        color: #555;
+      }
+
+      /* 2. Tambahkan Media Query untuk layar kecil (mobile) */
+      @media (max-width: 600px) {
+        body {
+          padding: 10px; /* Kurangi padding di sekitar form */
+        }
+        .form-container {
+          padding: 20px; /* Kurangi padding di dalam form */
+        }
+        h2 {
+          font-size: 1.5em; /* Kecilkan sedikit ukuran judul */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header-nav">
+      <button id="burger-menu" class="burger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div id="nav-links" class="nav-links">
+        <a href="daftar-tamu.html">Lihat Daftar Tamu</a>
+      </div>
+    </div>
+    <div class="form-container">
+      <!-- --- BAGIAN LOGO --- -->
+      <img src="img/logo.png" alt="Logo Sekolah" class="form-logo" />
+
+      <h2>Formulir Tamu Sekolah</h2>
+      <form id="tamuForm">
+        <div class="form-group">
+          <label for="nama">Nama:</label>
+          <input type="text" id="nama" name="nama" required />
+        </div>
+
+        <div class="form-group">
+          <label for="jabatan">Jabatan:</label>
+          <input type="text" id="jabatan" name="jabatan" required />
+        </div>
+
+        <div class="form-group">
+          <label for="instansi">Instansi/Asal:</label>
+          <input type="text" id="instansi" name="instansi" required />
+        </div>
+
+        <div class="form-group">
+          <label for="tujuan">Tujuan Kunjungan:</label>
+          <input type="text" id="tujuan" name="tujuan" required />
+        </div>
+
+        <div class="form-group">
+          <label for="nomor">No HP:</label>
+          <input
+            type="tel"
+            id="nomor"
+            name="nomor"
+            pattern="[0-9]*"
+            inputmode="numeric"
+            title="Harap masukkan hanya angka."
+          />
+        </div>
+
+        <div class="form-buttons">
+          <button type="reset" class="reset-button">RESET</button>
+          <button type="submit" id="submitButton">KIRIM</button>
+        </div>
+      </form>
+
+      <!-- Elemen untuk menampilkan status loading -->
+      <p id="loadingStatus" style="display: none">
+        Mengirim data, mohon tunggu...
+      </p>
+    </div>
+
+    <script>
+      // --- Logika untuk Burger Menu ---
+      // --- Logika untuk Burger Menu ---
+      const burgerMenu = document.getElementById("burger-menu");
+      const navLinks = document.getElementById("nav-links");
+
+      burgerMenu.addEventListener("click", () => {
+        burgerMenu.classList.toggle("active");
+        navLinks.classList.toggle("active");
+      });
+
+      // Menutup menu jika pengguna mengklik di luar area menu
+      window.addEventListener("click", function (e) {
+        if (!document.querySelector(".header-nav").contains(e.target)) {
+          burgerMenu.classList.remove("active");
+          navLinks.classList.remove("active");
+        }
+      });
+    </script>
+    <!-- Memuat konfigurasi dari file terpisah -->
+    <script src="config.js"></script>
+    <script>
+      document
+        .getElementById("tamuForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Tampilkan status loading dan nonaktifkan tombol
+          const submitButton = document.getElementById("submitButton");
+          const loadingStatus = document.getElementById("loadingStatus");
+          submitButton.disabled = true;
+          loadingStatus.style.display = "block";
+
+          const myForm = e.target;
+          const formData = new FormData(myForm);
+
+          fetch(SCRIPT_URL, { method: "POST", body: formData })
+            .then((response) => response.json()) // 1. Baca respons sebagai JSON
+            .then((data) => {
+              if (data.status === "success") {
+                // 2. Cek status dari server
+                alert("Data berhasil disimpan di Google Sheet!");
+                myForm.reset();
+              } else {
+                // 3. Tampilkan pesan error dari server jika gagal
+                alert("Gagal menyimpan: " + data.message);
+              }
+            })
+            .catch((error) => {
+              alert("Gagal mengirim data. Terjadi kesalahan komunikasi.");
+              console.error("Error:", error.message);
+            })
+            .finally(() => {
+              // Sembunyikan status loading dan aktifkan kembali tombol
+              submitButton.disabled = false;
+              loadingStatus.style.display = "none";
+            });
+        });
+    </script>
+  </body>
+</html>

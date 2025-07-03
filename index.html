@@ -49,7 +49,7 @@
         margin-bottom: 25px;
       }
       .header-nav {
-        position: absolute;
+        position: fixed; /* Diubah agar menu selalu mengikuti layar */
         top: 25px;
         right: 25px;
         z-index: 100;
@@ -83,7 +83,7 @@
         opacity: 0;
       }
       .burger-menu.active span:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
+        transform: translateY(-10px) rotate(-45deg);
       }
       /* Gaya untuk Menu Dropdown */
       .nav-links {
@@ -164,6 +164,23 @@
         text-align: center;
         margin-top: 15px;
         color: #555;
+      }
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Latar belakang hitam transparan */
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 8px;
+        z-index: 100;
       }
 
       /* 2. Tambahkan Media Query untuk layar kecil (mobile) */
@@ -300,5 +317,12 @@
             });
         });
     </script>
+    <footer>
+      Aplikasi ini dibuat oleh
+      <a href="https://www.linkedin.com/in/muhammad-husein-arafat-27884a21b/"
+        >Husein Arafat</a
+      >
+      &copy; 2025
+    </footer>
   </body>
 </html>

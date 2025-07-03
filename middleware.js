@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "@vercel/edge";
 
 // Tentukan path yang ingin Anda lindungi
 const PROTECTED_PATH = "/daftar-tamu.html";
@@ -11,8 +11,10 @@ export function middleware(req) {
 
     if (basicAuth) {
       const authValue = basicAuth.split(" ")[1];
-      // Decode dari Base64
-      const [user, pwd] = atob(authValue).split(":");
+      // Decode dari Base64 menggunakan Buffer (lebih andal di lingkungan server)
+      const [user, pwd] = Buffer.from(authValue, "base64")
+        .toString()
+        .split(":");
 
       // Gunakan Environment Variables untuk keamanan
       const validUser = process.env.BASIC_AUTH_USER;

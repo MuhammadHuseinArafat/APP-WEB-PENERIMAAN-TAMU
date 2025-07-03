@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Formulir Tamu Sekolah</title>
-    <link rel="icon" type="image/x-icon" href="/img/Logo CNWK.png" />
+    <link rel="icon" type="image/x-icon" href="img/Logo CNWK.png" />
     <!-- 1. Tambahkan Meta Viewport Tag untuk responsivitas -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -211,7 +211,7 @@
     </div>
     <div class="form-container">
       <!-- --- BAGIAN LOGO --- -->
-      <img src="img/logo.png" alt="Logo Sekolah" class="form-logo" />
+      <img src="img/logo.png" alt="Logo MA C" class="form-logo" />
 
       <h2>Formulir Tamu Sekolah</h2>
       <form id="tamuForm">
@@ -280,6 +280,10 @@
     <!-- Menggunakan script sebagai module untuk mengakses Environment Variables -->
     <script type="module">
       document
+        .getElementById("copyright-year")
+        .append(new Date().getFullYear());
+
+      document
         .getElementById("tamuForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
@@ -320,18 +324,11 @@
         });
     </script>
     <footer id="main-footer">
-      <span>
-        Aplikasi ini dibuat dengan &hearts; oleh
-        <a href="https://www.linkedin.com/in/muhammad-husein-arafat-27884a21b/"
-          >Husein Arafat</a
-        >
-        &copy; <span id="copyright-year"></span>
-      </span>
+      Aplikasi ini dibuat dengan &hearts; oleh
+      <a href="https://www.linkedin.com/in/muhammad-husein-arafat-27884a21b/"
+        >Husein Arafat</a
+      >
+      &copy; <span id="copyright-year"></span>
     </footer>
-    <script>
-      // Mengatur tahun hak cipta secara dinamis
-      document.getElementById("copyright-year").textContent =
-        new Date().getFullYear();
-    </script>
   </body>
 </html>

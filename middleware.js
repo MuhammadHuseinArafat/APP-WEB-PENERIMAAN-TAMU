@@ -11,10 +11,8 @@ export function middleware(req) {
 
     if (basicAuth) {
       const authValue = basicAuth.split(" ")[1];
-      // Decode dari Base64 menggunakan Buffer (lebih andal di lingkungan server)
-      const [user, pwd] = Buffer.from(authValue, "base64")
-        .toString()
-        .split(":");
+      // Decode dari Base64 menggunakan atob() yang merupakan Web API standar
+      const [user, pwd] = atob(authValue).split(":");
 
       // Gunakan Environment Variables untuk keamanan
       const validUser = process.env.BASIC_AUTH_USER;

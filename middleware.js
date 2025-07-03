@@ -1,4 +1,4 @@
-import { NextResponse } from "@vercel/edge";
+import { NextRequest, NextResponse } from "next/server";
 
 // Tentukan path yang ingin Anda lindungi
 const PROTECTED_PATH = "/daftar-tamu.html";
@@ -7,7 +7,6 @@ export function middleware(req) {
   // Hanya jalankan middleware untuk path yang dilindungi
   if (req.nextUrl.pathname.startsWith(PROTECTED_PATH)) {
     const basicAuth = req.headers.get("authorization");
-    const url = req.nextUrl;
 
     if (basicAuth) {
       const authValue = basicAuth.split(" ")[1];
@@ -24,9 +23,13 @@ export function middleware(req) {
       }
     }
 
-    // Jika salah atau tidak ada, minta otentikasi
-    url.pathname = "/api/auth";
-    return NextResponse.rewrite(url);
+    // Jika otentikasi gagal atau tidak ada, kirim respons 401 secara langsung.
+    return new Response("Authentication required.", {
+      status: 401,
+      headers: {
+        "WWW-Authenticate": 'Basic realm="Secure Area"',
+      },
+    });
   }
 
   // Lanjutkan untuk path lain yang tidak dilindungi

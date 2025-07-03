@@ -263,28 +263,27 @@
       </p>
     </div>
 
-    <script>
-      // --- Logika untuk Burger Menu ---
-      const burgerMenu = document.getElementById("burger-menu");
-      const navLinks = document.getElementById("nav-links");
-
-      burgerMenu.addEventListener("click", () => {
-        burgerMenu.classList.toggle("active");
-        navLinks.classList.toggle("active");
-      });
-
-      // Menutup menu jika pengguna mengklik di luar area menu
-      window.addEventListener("click", function (e) {
-        if (!document.querySelector(".header-nav").contains(e.target)) {
-          burgerMenu.classList.remove("active");
-          navLinks.classList.remove("active");
-        }
-      });
-    </script>
     <!-- Menggunakan script sebagai module untuk mengakses Environment Variables -->
     <script type="module">
       // Pastikan seluruh dokumen dimuat sebelum menjalankan skrip
       document.addEventListener("DOMContentLoaded", function () {
+        // --- Logika untuk Burger Menu ---
+        const burgerMenu = document.getElementById("burger-menu");
+        const navLinks = document.getElementById("nav-links");
+
+        burgerMenu.addEventListener("click", () => {
+          burgerMenu.classList.toggle("active");
+          navLinks.classList.toggle("active");
+        });
+
+        // Menutup menu jika pengguna mengklik di luar area menu
+        window.addEventListener("click", function (e) {
+          if (!document.querySelector(".header-nav").contains(e.target)) {
+            burgerMenu.classList.remove("active");
+            navLinks.classList.remove("active");
+          }
+        });
+
         // Mengatur tahun hak cipta secara dinamis
         const copyrightYearEl = document.getElementById("copyright-year");
         if (copyrightYearEl) {
@@ -330,7 +329,7 @@
         }
       });
     </script>
-    <footer id="main-footer">
+    <footer>
       Aplikasi ini dibuat dengan &hearts; oleh
       <a href="https://www.linkedin.com/in/muhammad-husein-arafat-27884a21b/"
         >Husein Arafat</a

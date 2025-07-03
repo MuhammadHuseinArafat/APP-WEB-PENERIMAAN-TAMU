@@ -12,3 +12,5 @@ Thumbs.db
 # File Konfigurasi Lokal (SANGAT PENTING)
 # File ini akan berisi URL skrip dan kata sandi Anda.
 config.js
+DEPLOY.txt
+prompt.txt

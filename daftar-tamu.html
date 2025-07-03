@@ -26,42 +26,6 @@
         margin: 20px auto;
         box-sizing: border-box;
       }
-      /* --- Gaya untuk Proteksi Kata Sandi --- */
-      #password-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-      }
-      #password-box {
-        background: white;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        text-align: center;
-        width: 90%;
-        max-width: 320px;
-      }
-      #password-box input {
-        width: 100%;
-        padding: 10px;
-        margin-top: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-      #password-error {
-        color: #dc3545;
-        margin-top: 10px;
-        min-height: 1.2em;
-      }
       /* --- Gaya untuk Modal Edit --- */
       #edit-modal-overlay {
         position: fixed;
@@ -287,25 +251,7 @@
     </style>
   </head>
   <body>
-    <!-- Kotak Dialog Kata Sandi -->
-    <div id="password-overlay">
-      <div id="password-box">
-        <h3>Akses Terbatas</h3>
-        <p>Silakan masukkan kata sandi untuk melihat daftar tamu.</p>
-        <form id="password-form">
-          <input type="password" id="password-input" placeholder="Kata Sandi" />
-          <button
-            type="submit"
-            class="back-link"
-            style="width: 100%; margin-top: 0"
-          >
-            Masuk
-          </button>
-          <p id="password-error"></p>
-        </form>
-      </div>
-    </div>
-    <div class="container" style="display: none">
+    <div class="container">
       <h2>Daftar Tamu</h2>
       <div class="controls-container">
         <div>
@@ -406,12 +352,6 @@
     <!-- Memuat konfigurasi dari file terpisah -->
     <script src="config.js"></script>
     <script>
-      const passwordOverlay = document.getElementById("password-overlay");
-      const passwordForm = document.getElementById("password-form");
-      const passwordInput = document.getElementById("password-input");
-      const passwordError = document.getElementById("password-error");
-      const mainContainer = document.querySelector(".container");
-
       const guestListBody = document.getElementById("guestList");
       const loadingDiv = document.getElementById("loading");
       const errorDiv = document.getElementById("error");
@@ -627,21 +567,12 @@
         loadGuestData(this.value);
       });
 
-      // Event listener untuk form kata sandi
-      passwordForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        if (passwordInput.value === PASSWORD) {
-          passwordOverlay.style.display = "none";
-          mainContainer.style.display = "block";
-          // Atur tanggal ke hari ini dan muat data untuk pertama kali
-          const todayString = getTodayString();
-          datePicker.value = todayString;
-          loadGuestData(todayString);
-        } else {
-          passwordError.textContent = "Kata sandi salah. Silakan coba lagi.";
-          passwordInput.value = "";
-          passwordInput.focus();
-        }
+      // Panggil fungsi untuk memuat data saat halaman pertama kali dibuka
+      document.addEventListener("DOMContentLoaded", () => {
+        // Atur tanggal ke hari ini dan muat data untuk pertama kali
+        const todayString = getTodayString();
+        datePicker.value = todayString;
+        loadGuestData(todayString);
       });
     </script>
   </body>

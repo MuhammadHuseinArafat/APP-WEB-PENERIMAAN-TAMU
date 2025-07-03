@@ -10,5 +10,3 @@ Thumbs.db
 *.log
 
 # File Konfigurasi Lokal dan File Teks
-config.js
-*.txt

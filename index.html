@@ -277,9 +277,8 @@
         }
       });
     </script>
-    <!-- Memuat konfigurasi dari file terpisah -->
-    <script src="config.js"></script>
-    <script>
+    <!-- Menggunakan script sebagai module untuk mengakses Environment Variables -->
+    <script type="module">
       document
         .getElementById("tamuForm")
         .addEventListener("submit", function (e) {
@@ -294,7 +293,10 @@
           const myForm = e.target;
           const formData = new FormData(myForm);
 
-          fetch(SCRIPT_URL, { method: "POST", body: formData })
+          // Baca SCRIPT_URL dari Vercel Environment Variable
+          const scriptURL = import.meta.env.VITE_SCRIPT_URL;
+
+          fetch(scriptURL, { method: "POST", body: formData })
             .then((response) => response.json()) // 1. Baca respons sebagai JSON
             .then((data) => {
               if (data.status === "success") {

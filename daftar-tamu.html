@@ -346,12 +346,13 @@
       </div>
     </div>
 
-    <script>
-      // Variabel akan dimuat dari config.js
-    </script>
-    <!-- Memuat konfigurasi dari file terpisah -->
-    <script src="config.js"></script>
-    <script>
+    <!-- Menggunakan script sebagai module untuk mengakses Environment Variables -->
+    <script type="module">
+      // Baca SCRIPT_URL dari Vercel Environment Variable sekali di awal
+      const SCRIPT_URL = import.meta.env.VITE_SCRIPT_URL;
+      if (!SCRIPT_URL)
+        console.error("VITE_SCRIPT_URL environment variable not set!");
+
       const guestListBody = document.getElementById("guestList");
       const loadingDiv = document.getElementById("loading");
       const errorDiv = document.getElementById("error");

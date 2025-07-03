@@ -9,7 +9,6 @@ Thumbs.db
 # File Log
 *.log
 
-# File Konfigurasi Lokal (SANGAT PENTING)
-# File ini akan berisi URL skrip dan kata sandi Anda.
+# File Konfigurasi Lokal dan File Teks
 config.js
 *.txt

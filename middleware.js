@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "@vercel/edge";
 
 // Tentukan path yang ingin Anda lindungi
 const PROTECTED_PATH = "/daftar-tamu.html";

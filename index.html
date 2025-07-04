@@ -196,9 +196,71 @@
           font-size: 1.5em; /* Kecilkan sedikit ukuran judul */
         }
       }
+
+      /* --- Splash Screen Animation --- */
+      #splash-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff; /* Latar belakang putih solid */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999; /* Pastikan di atas semua elemen lain */
+        transition: opacity 0.8s ease-out;
+      }
+
+      #splash-logo {
+        max-width: 250px;
+        animation: pulse 2s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Sembunyikan splash screen saat body memiliki class 'loaded' */
+      body.loaded #splash-screen {
+        opacity: 0;
+        pointer-events: none; /* Agar tidak bisa diklik setelah transparan */
+      }
+
+      /* Sembunyikan konten utama pada awalnya untuk efek fade-in */
+      .header-nav,
+      .form-container,
+      footer {
+        opacity: 0;
+        transition: opacity 0.8s ease-in 0.5s; /* Fade-in dengan sedikit jeda */
+      }
+
+      /* Tampilkan konten utama saat body memiliki class 'loaded' */
+      body.loaded .header-nav,
+      body.loaded .form-container,
+      body.loaded footer {
+        opacity: 1;
+      }
     </style>
   </head>
   <body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+      <img
+        src="img/logo.png"
+        alt="Logo Madrasah Aliyah Cakrawala"
+        id="splash-logo"
+      />
+    </div>
+
     <div class="header-nav">
       <button id="burger-menu" class="burger-menu">
         <span></span>
@@ -271,6 +333,23 @@
 
     <!-- Menggunakan script sebagai module untuk mengakses Environment Variables -->
     <script type="module">
+      // --- Logika Splash Screen ---
+      // Gunakan window.onload untuk menunggu semua konten (termasuk gambar) dimuat
+      window.onload = () => {
+        const body = document.body;
+        // Tambahkan class 'loaded' untuk memicu animasi di CSS
+        body.classList.add("loaded");
+
+        const splashScreen = document.getElementById("splash-screen");
+        if (splashScreen) {
+          // Hapus splash screen dari DOM setelah animasi selesai
+          // untuk performa yang lebih baik.
+          setTimeout(() => {
+            splashScreen.style.display = "none";
+          }, 1000); // Sedikit lebih lama dari transisi 0.8s
+        }
+      };
+
       // Pastikan seluruh dokumen dimuat sebelum menjalankan skrip
       document.addEventListener("DOMContentLoaded", function () {
         // --- Logika untuk Burger Menu ---

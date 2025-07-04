@@ -290,6 +290,24 @@
           copyrightYearEl.append(new Date().getFullYear());
         }
 
+        // --- Fungsi untuk menampilkan notifikasi Toast ---
+        function showToast(message, type = "success") {
+          const toastContainer = document.getElementById("toast-container");
+          const toast = document.createElement("div");
+          toast.className = `toast ${type}`;
+          toast.textContent = message;
+          toastContainer.appendChild(toast);
+
+          // Tampilkan toast
+          setTimeout(() => toast.classList.add("show"), 100);
+
+          // Sembunyikan dan hapus toast setelah 3 detik
+          setTimeout(() => {
+            toast.classList.remove("show");
+            toast.addEventListener("transitionend", () => toast.remove());
+          }, 3000);
+        }
+
         const tamuForm = document.getElementById("tamuForm");
         if (tamuForm) {
           tamuForm.addEventListener("submit", function (e) {
@@ -311,14 +329,17 @@
               .then((response) => response.json())
               .then((data) => {
                 if (data.status === "success") {
-                  alert("Data berhasil disimpan di Google Sheet!");
+                  showToast("Data berhasil disimpan!");
                   myForm.reset();
                 } else {
-                  alert("Gagal menyimpan: " + data.message);
+                  showToast("Gagal menyimpan: " + data.message, "error");
                 }
               })
               .catch((error) => {
-                alert("Gagal mengirim data. Terjadi kesalahan komunikasi.");
+                showToast(
+                  "Gagal mengirim data. Periksa koneksi Anda.",
+                  "error"
+                );
                 console.error("Error:", error.message);
               })
               .finally(() => {
@@ -329,6 +350,7 @@
         }
       });
     </script>
+
     <footer>
       Aplikasi ini dibuat dengan &hearts; oleh
       <a href="https://www.linkedin.com/in/muhammad-husein-arafat-27884a21b/"

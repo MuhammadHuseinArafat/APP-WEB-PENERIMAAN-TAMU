@@ -1,6 +1,13 @@
 {
-  "name": "app-web-penerimaan-tamu",
-  "version": "1.0.0",
+  "name": "aplikasi-tamu-sekolah",
   "private": true,
-  "type": "module"
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
 }
